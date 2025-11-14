@@ -31,15 +31,23 @@ struct GamesResponse: Codable {
 }
 
 
-func fetchGames() async throws -> [Game] {
-    guard let url = URL(string: "https://api.rawg.io/api/games?key=d3c55cab2e13412eb7fe84a3708ce353") else { throw URLError(.badURL)
+func fetchGames(startDate: String = "2000-01-01", endDate: String = "2025-12-31") async throws -> [Game] {
+    let randomPage = Int.random(in: 1...100)
+    var urlString = "https://api.rawg.io/api/games?key=d3c55cab2e13412eb7fe84a3708ce353"
+    urlString += "&dates=\(startDate),\(endDate)"
+    urlString += "&page_size=40"
+    urlString += "&page=\(randomPage)"
+   
+    guard let url = URL(string: urlString)
+    else { throw URLError(.badURL)
     }
     let (data, response) = try await URLSession.shared.data(from: url)
     guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
         throw URLError(.badServerResponse)
     }
     let decodeResponse = try JSONDecoder().decode(GamesResponse.self, from: data)
-    return decodeResponse.results
+    let highlyRatedGames = decodeResponse.results.filter{ game in return game.rating > 3.0}
+    return highlyRatedGames
 }
 
 func testFetchGames()
