@@ -8,6 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    private func fetchRandomGame() {
+        Task {
+            do {let fetchedGames = try await fetchGames()
+                games = fetchedGames
+                currentGame = fetchedGames.randomElement()
+                message = "Shake your device  or tap the button for a new game"
+                
+            } catch {
+                print ("Error Fetching Games", error)
+                
+            }
+        }
+    }
     @State private var message = "Shake your device for a new game!"
     @State private var games: [Game] = []
     @State private var currentGame: Game?
@@ -51,27 +64,20 @@ struct ContentView: View {
                             .bold(true)
                         //.edgesIgnoringSafeArea(.all)
                             .font(.system(size: 20))
-                            .accessibilityLabel("Shake your device for a new game")
+                            .accessibilityLabel("Shake your device  or tap the button for a new game")
                             .padding()
                         Image(systemName: "iphone")
                             .symbolEffect(.wiggle)
                             .font(.system(size: 35))
                             .foregroundColor(Color.white)
+                        
+                        Button (action: { fetchRandomGame()})
+                        {
+                            Label("Get New Game", systemImage: "gamecontroller.fill")
+                        }
                     }
                 }
-            }.onShake {
-                Task {
-                    do {let fetchedGames = try await fetchGames()
-                        games = fetchedGames
-                        currentGame = fetchedGames.randomElement()
-                        message = "Shake Again for a New Game"
-                        
-                    } catch {
-                        print ("Error Fetching Games", error)
-                        
-                    }
-                }
-            }
+            }.onShake {fetchRandomGame()}
             .accessibilityAddTraits(.isButton)
             //.accessibilityLabel("Get New Game")
             //.accessibilityHint("Triple tap to get a new random game suggestion.")
@@ -129,6 +135,10 @@ struct ContentView: View {
                     .font(.subheadline)
                     .bold()
                     .accessibilityAddTraits(.isButton)
+                Button (action: { fetchRandomGame()})
+                {
+                    Label("Get New Game", systemImage: "gamecontroller.fill")
+                }
                 
             }
             
