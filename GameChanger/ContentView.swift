@@ -13,7 +13,7 @@ struct ContentView: View {
             do {let fetchedGames = try await fetchGames()
                 games = fetchedGames
                 currentGame = fetchedGames.randomElement()
-                message = "Shake your device  or tap the button for a new game"
+                //message = "Shake your device or tap the button for a new game"
                 
             } catch {
                 print ("Error Fetching Games", error)
@@ -21,13 +21,14 @@ struct ContentView: View {
             }
         }
     }
-    @State private var message = "Shake your device for a new game!"
+    //@State private var message = "Shake your device or tap the button for a new game!"
     @State private var games: [Game] = []
     @State private var currentGame: Game?
+    
+    
     var body: some View {
         VStack{
             ZStack{
-                
                 if let game = currentGame, let imageUrl = game.background_image { AsyncImage(url: URL(string: imageUrl))
                     { phase in switch phase {case .empty:
                         ProgressView()
@@ -47,9 +48,6 @@ struct ContentView: View {
                     @unknown default:
                         EmptyView()
                         
-                        
-                        Spacer()
-                        
                     }
                     }
                 }
@@ -59,95 +57,123 @@ struct ContentView: View {
                     
                     
                     VStack {
-                        Text(message)
+                        
+                        
+                        
+                        
+                        //Image(systemName: "iphone")
+                        //.symbolEffect(.wiggle)
+                        //   .font(.system(size: 35))
+                        // .foregroundColor(Color.white)
+                        
+                        
+                        //Button (action: { fetchRandomGame()})
+                        //   {
+                        //     Text("Get New Game")
+                        //  }.buttonStyle(.glassProminent)
+                        
+                        Text("Shake your device")
                             .foregroundColor(Color.white)
                             .bold(true)
-                        //.edgesIgnoringSafeArea(.all)
-                            .font(.system(size: 20))
-                            .accessibilityLabel("Shake your device  or tap the button for a new game")
-                            .padding()
-                        Image(systemName: "iphone")
-                            .symbolEffect(.wiggle)
-                            .font(.system(size: 35))
-                            .foregroundColor(Color.white)
+                            .edgesIgnoringSafeArea(.all)
+                            .font(.system(size: 15))
                         
-                        Button (action: { fetchRandomGame()})
-                        {
-                            Label("Get New Game", systemImage: "gamecontroller.fill")
-                        }
-                    }
-                }
-            }.onShake {fetchRandomGame()}
-            .accessibilityAddTraits(.isButton)
-            //.accessibilityLabel("Get New Game")
-            //.accessibilityHint("Triple tap to get a new random game suggestion.")
-            if let game = currentGame {
-                VStack(alignment: .leading, spacing: 8) {
-                    
-                    Text(game.name)
-                        .font(.title)
-                        .fontWeight(.heavy)
-                        .padding(.top, 10)
-                        .accessibilityHeading(.h1)
-                    
-                    VStack {
-                        HStack{
+                        Text("or double tap the screen")
+                            .foregroundColor(Color.white)
+                            .bold(true)
+                            .edgesIgnoringSafeArea(.all)
+                            .font(.system(size: 15))
+                        
+                        Text("for a New Game")
+                            .foregroundColor(Color.white)
+                            .bold(true)
+                            .edgesIgnoringSafeArea(.all)
+                            .font(.system(size: 15))
                             
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.yellow)
-                                .accessibilityHidden (true)
-                            Text("**Rating:** \(game.rating, specifier: "%.2f /5")")
-                                .accessibilityHidden(true)
-                        }
-                        Text("**Released:** \(game.released ?? "N/A")")
+                    }.accessibilityElement(children: .combine)
+                        .accessibilityLabel("Shake your device or double tap the screen for a new game")
+                }
+            }
+
+            if let game = currentGame {
+                
+                VStack (alignment: .leading) {
+                    
+                    HStack {
+                        
+                        Text(game.name)
+                            .font(.title)
+                            .fontWeight(.heavy)
+                            .accessibilityHeading(.h1)
+                        
+                    }.font(.headline)
+                        .foregroundColor(.secondary)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel(Text(game.name))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(5)
+
+                    
+                    HStack{
+                        
+                        Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                            .accessibilityHidden (true)
+                        Text("**Rating:** \(game.rating, specifier: "%.2f out of 5")")
+                            
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(10)
+
+                    HStack{
+                        
+                        Image(systemName: "calendar")
+                            .foregroundColor(.red)
                             .accessibilityHidden(true)
-                    }
-                    .font(.headline)
-                    .foregroundColor(.secondary)
-                    .accessibilityElement(children: .combine)
-                    .accessibilityLabel("Rating: \(game.rating, specifier: "%.2f") out of five stars. Released: \(game.released ?? "Information not available")")
+                        Text("**Released:** \(game.released ?? "N/A")")
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(10)
+
                     
                     let platformNames = game.platforms.prefix(4).map { $0.platform.name }.joined(separator: ", ")
-                    Text("**Platforms:** \(platformNames)")
-                        .font(.subheadline)
-                        .accessibilityElement(children: .combine)
-                    let genreNames = game.genres.map { $0.name }.joined(separator: ", ")
-                    Text("**Genres:** \(genreNames)")
+                    
+                    HStack{
+                        Image(systemName: "display")
+                            .foregroundColor(.blue)
+                            .accessibilityHidden(true)
+                        Text("**Platforms:** \(platformNames)")
+                            .font(.subheadline)
+                            .accessibilityElement(children: .combine)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(10)
+
+                    HStack{
+                        let genreNames = game.genres.map { $0.name }.joined(separator: ", ")
+                        
+                        Image(systemName: "tag")
+                            .foregroundColor(.purple)
+                            .accessibilityHidden(true)
+                        Text("**Genres:** \(genreNames)")
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(10)
                     
                     
                     
-                    Spacer()
-                    
-                    
-                    
-                    
-                    
-                }.padding (10)
-                    .frame (width: 350, height: 250)
+                }.frame (width: 350, height: 250)
                     .background(Color.gray.opacity(0.5))
                     .cornerRadius(12)
                 
-            }
-            VStack {
                 Spacer()
-                 Text ("Shake the Device Again for a New Game")
-                    .accessibilityLabel("Shake Again for a New Game")
-                    .font(.subheadline)
-                    .bold()
-                    .accessibilityAddTraits(.isButton)
-                Button (action: { fetchRandomGame()})
-                {
-                    Label("Get New Game", systemImage: "gamecontroller.fill")
-                }
                 
             }
             
-        }
+        }.onShake {fetchRandomGame()}
+            .accessibilityAddTraits(.isButton)
+            .onEmulatedShake { fetchRandomGame() }
     }
 }
 extension View {
     func onEmulatedShake(perform action: @escaping () -> Void) -> some View {
-        self.onTapGesture(count: 3) {
+        self.onTapGesture(count: 2) {
             action()
         }
         

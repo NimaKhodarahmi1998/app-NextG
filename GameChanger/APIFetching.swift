@@ -34,6 +34,8 @@ struct GamesResponse: Codable {
 func fetchGames(startDate: String = "2000-01-01", endDate: String = "2025-12-31") async throws -> [Game] {
     let randomPage = Int.random(in: 1...100)
     var urlString = "https://api.rawg.io/api/games?key=d3c55cab2e13412eb7fe84a3708ce353"
+    urlString += "&fields=id,name,released,rating,genres,platforms,background_image"
+    urlString += "&ordering=-rating"
     urlString += "&dates=\(startDate),\(endDate)"
     urlString += "&page_size=40"
     urlString += "&page=\(randomPage)"

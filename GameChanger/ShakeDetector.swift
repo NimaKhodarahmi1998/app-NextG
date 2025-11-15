@@ -14,14 +14,15 @@ final class ShakeManager: ObservableObject {
 }
 
 final class CoreMotionShakeDetector{
+    static let shared = CoreMotionShakeDetector()
     private let motionManager = CMMotionManager()
-    private let shakeThreshold: Double = 2.5
+    private let shakeThreshold: Double = 3.0
     private let updateInterval: TimeInterval = 0.01
     private var lastAcceleration: CMAcceleration?
     private var isShaking = false
-    private var cooldownDuration: TimeInterval = 1.5
+    private var cooldownDuration: TimeInterval = 2.0
     
-    init()
+    private init()
     {if motionManager.isAccelerometerAvailable {
         motionManager.accelerometerUpdateInterval = updateInterval
         startDetection()
@@ -32,7 +33,7 @@ final class CoreMotionShakeDetector{
         motionManager.startAccelerometerUpdates(to: .main) { [weak self] (data, error) in
             guard let self = self, let acceleration = data?.acceleration else { return }
             
-            if self .isShaking{return}
+            if self.isShaking {return}
             
             if let lastAccel = self.lastAcceleration {
                 let deltaX = abs(lastAccel.x - acceleration.x)
@@ -45,7 +46,8 @@ final class CoreMotionShakeDetector{
                     ShakeManager.shared.deviceShaken()
                     //self.stopDetection()
                     DispatchQueue.main.asyncAfter(deadline: .now() + self.cooldownDuration)
-                    {self.isShaking = false
+                    {
+                        self.isShaking = false
                         
                     }
                 }
@@ -64,18 +66,31 @@ final class CoreMotionShakeDetector{
     }
 }
 final class ShakeDetectorPersistentWrapper: ObservableObject {
-    let detector = CoreMotionShakeDetector()
+    //let detector = CoreMotionShakeDetector()
 }
 
 struct ShakeViewModifier: ViewModifier {
     let action: () -> Void
     @StateObject private var shakeManager: ShakeManager = .shared
-    @StateObject private var detectorWrapper = ShakeDetectorPersistentWrapper()
+    @State private var didSubscribe = false
+    //@StateObject private var detectorWrapper = ShakeDetectorPersistentWrapper()
     
     func body(content: Content) -> some View {
-        content.onReceive(shakeManager.shakePublisher) { _ in
-            action()
+        content.onAppear{
+            _ = CoreMotionShakeDetector.shared
+            
+            guard cancellables.isEmpty else {return}
+            didSubscribe = true
+            shakeManager.shakePublisher
+                .sink { _ in action()
+                }
+                .store(in: &cancellables)
+
         }
+        
+        
+           
     }
+    @State private var cancellables = Set<AnyCancellable>()
 }
 extension View { func onShake (perform action: @escaping () -> Void) -> some View {modifier(ShakeViewModifier(action: action))}}
