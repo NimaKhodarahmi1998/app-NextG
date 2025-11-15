@@ -13,7 +13,7 @@ struct ContentView: View {
             do {let fetchedGames = try await fetchGames()
                 games = fetchedGames
                 currentGame = fetchedGames.randomElement()
-                //message = "Shake your device or tap the button for a new game"
+                
                 
             } catch {
                 print ("Error Fetching Games", error)
@@ -21,7 +21,7 @@ struct ContentView: View {
             }
         }
     }
-    //@State private var message = "Shake your device or tap the button for a new game!"
+    
     @State private var games: [Game] = []
     @State private var currentGame: Game?
     
@@ -58,20 +58,6 @@ struct ContentView: View {
                     
                     VStack {
                         
-                        
-                        
-                        
-                        //Image(systemName: "iphone")
-                        //.symbolEffect(.wiggle)
-                        //   .font(.system(size: 35))
-                        // .foregroundColor(Color.white)
-                        
-                        
-                        //Button (action: { fetchRandomGame()})
-                        //   {
-                        //     Text("Get New Game")
-                        //  }.buttonStyle(.glassProminent)
-                        
                         Text("Shake your device")
                             .foregroundColor(Color.white)
                             .bold(true)
@@ -89,12 +75,14 @@ struct ContentView: View {
                             .bold(true)
                             .edgesIgnoringSafeArea(.all)
                             .font(.system(size: 15))
-                            
+                        
                     }.accessibilityElement(children: .combine)
                         .accessibilityLabel("Shake your device or double tap the screen for a new game")
+                        .frame(maxHeight: .infinity, alignment: .bottom)
+                        .padding(100)
                 }
             }
-
+            
             if let game = currentGame {
                 
                 VStack (alignment: .leading) {
@@ -112,7 +100,7 @@ struct ContentView: View {
                         .accessibilityLabel(Text(game.name))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(5)
-
+                    
                     
                     HStack{
                         
@@ -120,10 +108,10 @@ struct ContentView: View {
                             .foregroundColor(.yellow)
                             .accessibilityHidden (true)
                         Text("**Rating:** \(game.rating, specifier: "%.2f out of 5")")
-                            
+                        
                     }.frame(maxWidth: .infinity, alignment: .leading)
                         .padding(10)
-
+                    
                     HStack{
                         
                         Image(systemName: "calendar")
@@ -132,7 +120,7 @@ struct ContentView: View {
                         Text("**Released:** \(game.released ?? "N/A")")
                     }.frame(maxWidth: .infinity, alignment: .leading)
                         .padding(10)
-
+                    
                     
                     let platformNames = game.platforms.prefix(4).map { $0.platform.name }.joined(separator: ", ")
                     
@@ -145,7 +133,7 @@ struct ContentView: View {
                             .accessibilityElement(children: .combine)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                         .padding(10)
-
+                    
                     HStack{
                         let genreNames = game.genres.map { $0.name }.joined(separator: ", ")
                         

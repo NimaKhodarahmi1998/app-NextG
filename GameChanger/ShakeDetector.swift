@@ -66,14 +66,12 @@ final class CoreMotionShakeDetector{
     }
 }
 final class ShakeDetectorPersistentWrapper: ObservableObject {
-    //let detector = CoreMotionShakeDetector()
 }
 
 struct ShakeViewModifier: ViewModifier {
     let action: () -> Void
     @StateObject private var shakeManager: ShakeManager = .shared
     @State private var didSubscribe = false
-    //@StateObject private var detectorWrapper = ShakeDetectorPersistentWrapper()
     
     func body(content: Content) -> some View {
         content.onAppear{
@@ -85,11 +83,11 @@ struct ShakeViewModifier: ViewModifier {
                 .sink { _ in action()
                 }
                 .store(in: &cancellables)
-
+            
         }
         
         
-           
+        
     }
     @State private var cancellables = Set<AnyCancellable>()
 }

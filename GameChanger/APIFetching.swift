@@ -39,7 +39,7 @@ func fetchGames(startDate: String = "2000-01-01", endDate: String = "2025-12-31"
     urlString += "&dates=\(startDate),\(endDate)"
     urlString += "&page_size=40"
     urlString += "&page=\(randomPage)"
-   
+    
     guard let url = URL(string: urlString)
     else { throw URLError(.badURL)
     }
