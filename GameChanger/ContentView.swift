@@ -36,14 +36,16 @@ struct ContentView: View {
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 350, height: 300)
-                            .cornerRadius(12)
+                            .background(.regularMaterial, in: .rect(cornerRadius: 18))
+                            .frame(width: 350, height: 320)
+                            .clipShape(.rect(cornerRadius: 20))
+                            .shadow(color: .black.opacity(0.08), radius: 12, y: 4)
                         
                     case .failure:
                         Image(systemName: "photo")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            .frame(width: 350, height: 300)
+                            .frame(width: 350, height: 320)
                             .cornerRadius(12)
                     @unknown default:
                         EmptyView()
@@ -80,6 +82,7 @@ struct ContentView: View {
                         .accessibilityLabel("Shake your device or double tap the screen for a new game")
                         .frame(maxHeight: .infinity, alignment: .bottom)
                         .padding(100)
+                    
                 }
             }
             
@@ -93,7 +96,8 @@ struct ContentView: View {
                             .font(.title)
                             .fontWeight(.heavy)
                             .accessibilityHeading(.h1)
-                        
+                            
+
                     }.font(.headline)
                         .foregroundColor(.secondary)
                         .accessibilityElement(children: .combine)
@@ -147,8 +151,9 @@ struct ContentView: View {
                     
                     
                 }.frame (width: 350, height: 250)
-                    .background(Color.gray.opacity(0.5))
-                    .cornerRadius(12)
+                    .background(.regularMaterial, in: .rect(cornerRadius: 12))
+                    .shadow(color: .black.opacity(0.6), radius: 10, y: 5)
+
                 
                 Spacer()
                 
