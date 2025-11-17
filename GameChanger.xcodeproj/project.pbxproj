@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		783599DE2EBDF67F00841097 /* GameChanger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameChanger.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		783599DE2EBDF67F00841097 /* NextG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 		783599DF2EBDF67F00841097 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				783599DE2EBDF67F00841097 /* GameChanger.app */,
+				783599DE2EBDF67F00841097 /* NextG.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,7 +67,7 @@
 			packageProductDependencies = (
 			);
 			productName = GameChanger;
-			productReference = 783599DE2EBDF67F00841097 /* GameChanger.app */;
+			productReference = 783599DE2EBDF67F00841097 /* NextG.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -269,7 +269,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Nima-Khodarahmi.GameChanger";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NextG;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -301,7 +301,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Nima-Khodarahmi.GameChanger";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NextG;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
