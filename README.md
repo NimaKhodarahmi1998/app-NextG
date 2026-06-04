@@ -1,24 +1,9 @@
-<h1 align="center">🎮 NextG</h1>
+# NextG
 
-<p align="center"><b>Can't decide what to play next? Give your phone a shake.</b></p>
+Can't decide what to play? Shake your phone and it picks a game for you, with its genres, Metascore and the rest. Shake again if you don't like the pick.
 
-NextG helps gamers find their next game to play. Just **shake your phone** and you'll get a game to play next — along with its genres, Metascore, and everything you need to know. Don't like it? Shake again.
+I made it at the Apple Developer Academy. It was called GameChanger first, until I found out that name was already taken.
 
-> Originally named *GameChanger* — renamed to **NextG** once I found the name was already taken.
+Swift and SwiftUI.
 
-## ✨ Features
-
-- 📲 Shake-to-discover game suggestions
-- 🎯 Genres, Metascore &amp; key details at a glance
-- 🔁 Endless re-rolls — shake again for another pick
-
-## 🛠️ Built with
-
-- **Swift** &amp; **SwiftUI**
-- Motion-based shake detection
-- Built at the **Apple Developer Academy**
-
-## 👤 Author
-
-**Nima Khodarahmi** — iOS Developer &amp; Designer, Naples 🇮🇹
-[Portfolio](https://nimakhodarahmi1998.github.io/) · [LinkedIn](https://www.linkedin.com/in/nima-khodarahmi1998/) · [Email](mailto:7798.nima@gmail.com)
+Nima Khodarahmi — [site](https://nimakhodarahmi1998.github.io/)
