@@ -6,4 +6,4 @@ I made it at the Apple Developer Academy. It was called GameChanger first, until
 
 Swift and SwiftUI.
 
-Nima Khodarahmi — [site](https://nimakhodarahmi1998.github.io/)
+By Nima Khodarahmi. nimakhodarahmi1998.github.io
